@@ -40,7 +40,28 @@ class PianoTester {
 		// Use makeMouseEvent and TestReceiver.getKeyOnCount.
 		// TODO complete me
 	}
+	
 
 	// TODO write at least 3 more tests!
 	// ...
+
+	@Test
+	void testClickUpperRightMostPixel(){
+		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH), 0));
+		assertTrue(_receiver.isKeyOn(83));
+	}
+
+	@Test
+	void testClickLowerRightMostPixel(){
+		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH, Piano.HEIGHT));
+		assertTrue(_receiver.isKeyOn(83));
+	}
+
+	@Test
+	void testClickLowerLeftMostPixel(){
+		_mouseListener.mousePressed(makeMouseEvent(0, Piano.HEIGHT));
+		assertTrue(_receiver.isKeyOn(Piano.START_PITCH));
+	}
+
+
 }
