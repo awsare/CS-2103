@@ -83,7 +83,7 @@ public class PianoMouseListener extends MouseAdapter {
 		if (keyToPlay != null && !keyToPlay.isOn()) {
 			allKeysOff();
 			keyToPlay.play(true);
-			System.out.println("Playing key with pitch " + keyToPlay.getPitch());
+			System.out.println(keyToPlay);
 		}
 	}
 }

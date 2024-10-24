@@ -10,7 +10,7 @@ public class Key {
 	private int _pitch;
 	private boolean _isOn;
 	private Piano _piano;
-	private boolean _isBlack;
+	private boolean _isBlack;  // added isBlack, represents if the key is a black key or not
 
 	/**
 	 * Returns the polygon associated with this key.
@@ -30,7 +30,7 @@ public class Key {
 		_polygon = polygon;
 		_pitch = pitch;
 		_piano = piano;
-		_isBlack = isBlack;
+		_isBlack = isBlack; // added isBlack, represents if the key is a black key or not
 	}
 
 	// DO NOT MODIFY THIS METHOD.
@@ -62,38 +62,39 @@ public class Key {
 		}
 	}
 
-	// TODO implement this method.
 	/**
 	 * Paints the key using the specified Swing Graphics object.
 	 * @param g the Graphics object to be used for painting.
 	 */
 	public void paint (Graphics g) {
-		// TODO: Change this to handle the different key colors
-		// and different key states (pressed down or not).
-
-		if (this._isOn) {
+		
+		if (this._isOn) { // if the key is on, make it gray
 			g.setColor(Color.GRAY);
-		} else if (_isBlack) {
+		} else if (_isBlack) { // if the key is a black key, make it black
 			g.setColor(Color.BLACK);
-		} else {
+		} else { // else, the key must be a white key, so make it white
 			g.setColor(Color.WHITE);
 		}
 		
-		g.fillPolygon(_polygon);
-		g.setColor(Color.BLACK);
-		g.drawPolygon(_polygon);
+		g.fillPolygon(_polygon); // fill the key with the color set above
+		g.setColor(Color.BLACK); // change color to black for the key outlines
+		g.drawPolygon(_polygon); // draw the black outline
 	}
 
+	/**
+	 * Returns the boolean isBlack, representing if the key is black or white.
+	 * @return the boolean isBlack.
+	 */
 	public boolean isBlack() {
 		return this._isBlack;
 	}
 
+	/**
+	 * Returns the boolean isOn, representing if the key is on or off.
+	 * @return the boolean isOn.
+	 */
 	public boolean isOn() {
 		return this._isOn;
-	}
-
-	public int getPitch() {
-		return this._pitch;
 	}
 
 	/**
