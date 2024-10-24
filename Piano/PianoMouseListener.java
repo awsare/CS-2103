@@ -25,8 +25,6 @@ public class PianoMouseListener extends MouseAdapter {
 	 * of the entire piano, of where the mouse is currently located.
 	 */
 	public void mouseDragged (MouseEvent e) {
-		System.out.println(e.toString());
-		System.out.println(e.getX() + " our x and our y " + e.getY());
 		playKey(e.getX(), e.getY());
 	}
 
@@ -42,8 +40,6 @@ public class PianoMouseListener extends MouseAdapter {
 		//	if (key.getPolygon().contains(e.getX(), e.getY())) {
 		// To turn a key "on", you could then write:
 		//      key.play(true);  // Note that the key should eventually be turned off!
-		System.out.println(e.toString());
-		System.out.println(e.getX() + " our x and our y " + e.getY());
 		playKey(e.getX(), e.getY());
 	}
 
@@ -65,12 +61,27 @@ public class PianoMouseListener extends MouseAdapter {
 	}
 
 	private void playKey(int mouseX, int mouseY) {
+		Key keyToPlay = null;
+
 		for (Key key: _keys) {
-			if (key.getPolygon().contains(mouseX, mouseY) && !key.isOn()) {
-				allKeysOff();
-				key.play(true);
-				System.out.println("Playing key with pitch " + key.getPitch());
+			if (key.getPolygon().contains(mouseX, mouseY) && !key.isBlack()) {
+				keyToPlay = key;
+				break;
 			}
 		}	
+
+		for (Key key: _keys) {
+			if (key.getPolygon().contains(mouseX, mouseY) && key.isBlack()) {
+				keyToPlay = key;
+				break;
+			}
+		}	
+
+
+		if (!keyToPlay.isOn() && keyToPlay != null) {
+			allKeysOff();
+			keyToPlay.play(true);
+			System.out.println("Playing key with pitch " + keyToPlay.getPitch());
+		}
 	}
 }
