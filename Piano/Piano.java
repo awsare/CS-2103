@@ -20,6 +20,7 @@ public class Piano extends JPanel {
 	public static int KEYS_PER_OCTAVE = NUM_BLACK_KEYS_PER_OCTAVE + NUM_WHITE_KEYS_PER_OCTAVE;
 	public static int WIDTH = NUM_WHITE_KEYS * WHITE_KEY_WIDTH;
 	public static int HEIGHT = WHITE_KEY_HEIGHT;
+	public static int[] BLACK_KEY_POSITIONS = {0, 1, 3, 4, 5};
 		
 	private java.util.List<Key> _keys = new ArrayList<>();
 	private Receiver _receiver;
@@ -88,24 +89,17 @@ public class Piano extends JPanel {
 
 	private void makeOctave(int octaveXStart, int octavePitchStart) {
 		int currentWhitePitch = octavePitchStart;
-		int currentBlackPitch = octavePitchStart + 1;
 
 		for (int i = 0; i < NUM_WHITE_KEYS_PER_OCTAVE; i++) {
 			makeWhiteKey(octaveXStart + (i * WHITE_KEY_WIDTH), currentWhitePitch);
-			currentWhitePitch = currentWhitePitch + 2;
-			if (i == 2) {
-				currentWhitePitch--;
-			}
+			currentWhitePitch += (i == 2) ? 1 : 2;
 		}
 
-		for (int i = 0; i < NUM_WHITE_KEYS_PER_OCTAVE; i++) {
-			if (i != 2 && i != 6) {
-				makeBlackKey(octaveXStart + (i * WHITE_KEY_WIDTH), currentBlackPitch);
-			}
-			currentBlackPitch = currentBlackPitch + 2;
-			if (i == 2) {
-				currentBlackPitch--;
-			}
+		
+		int currentBlackPitch = octavePitchStart + 1;
+		for (int i : BLACK_KEY_POSITIONS) {
+			makeBlackKey(octaveXStart + (i * WHITE_KEY_WIDTH), currentBlackPitch);
+			currentBlackPitch += (i == 1) ? 3 : 2;
 		}
 	}
 
