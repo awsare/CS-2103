@@ -47,19 +47,19 @@ class PianoTester {
 
 	@Test
 	void testClickUpperRightMostPixel(){
-		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH), 0));
+		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH-1, 0));
 		assertTrue(_receiver.isKeyOn(83));
 	}
 
 	@Test
 	void testClickLowerRightMostPixel(){
-		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH, Piano.HEIGHT));
+		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH-1, Piano.HEIGHT-1));
 		assertTrue(_receiver.isKeyOn(83));
 	}
 
 	@Test
 	void testClickLowerLeftMostPixel(){
-		_mouseListener.mousePressed(makeMouseEvent(0, Piano.HEIGHT));
+		_mouseListener.mousePressed(makeMouseEvent(0, Piano.HEIGHT-1));
 		assertTrue(_receiver.isKeyOn(Piano.START_PITCH));
 	}
 
