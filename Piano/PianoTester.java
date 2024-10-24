@@ -39,6 +39,10 @@ class PianoTester {
 		// should cause the key to be turned on only once, not multiple times.
 		// Use makeMouseEvent and TestReceiver.getKeyOnCount.
 		// TODO complete me
+		_mouseListener.mouseDragged(makeMouseEvent(0, 0));
+		_mouseListener.mouseDragged(makeMouseEvent(0, 1));
+		assertTrue(TestReceiver.getKeyOnCount(48) <= 1);
+
 	}
 	
 
