@@ -8,7 +8,6 @@ public class Key {
 	// You are free to add more instance variables if you wish.
 	private Polygon _polygon;
 	private int _pitch;
-	private int _keyPosition;
 	private boolean _isOn;
 	private Piano _piano;
 	private boolean _isBlack;
@@ -71,8 +70,6 @@ public class Key {
 	public void paint (Graphics g) {
 		// TODO: Change this to handle the different key colors
 		// and different key states (pressed down or not).
-		int keyPosition = (this._pitch - 48) % 12;
-
 
 		if (this._isOn) {
 			g.setColor(Color.GRAY);

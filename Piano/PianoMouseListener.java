@@ -60,23 +60,24 @@ public class PianoMouseListener extends MouseAdapter {
 		}
 	}
 
-	private void playKey(int mouseX, int mouseY) {
+	private Key findKeyToPlay(int mouseX, int mouseY, boolean isBlack) {
 		Key keyToPlay = null;
 
 		for (Key key: _keys) {
-			if (key.getPolygon().contains(mouseX, mouseY) && key.isBlack()) {
+			if (key.getPolygon().contains(mouseX, mouseY) && (key.isBlack() == isBlack)) {
 				keyToPlay = key;
 				break;
 			}
 		}	
 
+		return keyToPlay;
+	} 
+
+	private void playKey(int mouseX, int mouseY) {
+		Key keyToPlay = findKeyToPlay(mouseX, mouseY, true);
+
 		if (keyToPlay == null) {
-			for (Key key: _keys) {
-				if (key.getPolygon().contains(mouseX, mouseY) && !key.isBlack()) {
-					keyToPlay = key;
-					break;
-				}
-			}
+			keyToPlay = findKeyToPlay(mouseX, mouseY, false);
 		}
 		
 		if (keyToPlay != null && !keyToPlay.isOn()) {
