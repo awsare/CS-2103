@@ -64,7 +64,7 @@ public class PianoMouseListener extends MouseAdapter {
 		Key keyToPlay = null;
 
 		for (Key key: _keys) {
-			if (key.getPolygon().contains(mouseX, mouseY) && !key.isBlack()) {
+			if (key.getPolygon().contains(mouseX, mouseY) && key.isBlack()) {
 				keyToPlay = key;
 				break;
 			}
@@ -72,7 +72,7 @@ public class PianoMouseListener extends MouseAdapter {
 
 		if (keyToPlay == null) {
 			for (Key key: _keys) {
-				if (key.getPolygon().contains(mouseX, mouseY) && key.isBlack()) {
+				if (key.getPolygon().contains(mouseX, mouseY) && !key.isBlack()) {
 					keyToPlay = key;
 					break;
 				}
