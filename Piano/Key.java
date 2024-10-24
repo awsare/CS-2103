@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 import javax.sound.midi.*;
-import javax.swing.*;
 
 /**
  * Implements a key on a simulated piano keyboard.
@@ -30,12 +27,11 @@ public class Key {
 	 * @param pitch the pitch value of the key.
 	 * @param piano the Piano associated with this key.
 	 */
-	public Key (Polygon polygon, int pitch, Piano piano) {
+	public Key (Polygon polygon, int pitch, Piano piano, boolean isBlack) {
 		_polygon = polygon;
 		_pitch = pitch;
 		_piano = piano;
-		_keyPosition = (this._pitch - 48) % 12;
-		_isBlack = (_keyPosition < 5 && _keyPosition % 2 == 1) || (_keyPosition >= 5 && _keyPosition % 2 == 1);
+		_isBlack = isBlack;
 	}
 
 	// DO NOT MODIFY THIS METHOD.

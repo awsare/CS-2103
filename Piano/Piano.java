@@ -1,8 +1,7 @@
-import javax.swing.*;
 import java.awt.*;
 import java.util.*;
-import java.awt.event.*;
 import javax.sound.midi.*;
+import javax.swing.*;
 
 /**
  * Implements a simulated piano with 36 keys.
@@ -94,6 +93,9 @@ public class Piano extends JPanel {
 		for (int i = 0; i < NUM_WHITE_KEYS_PER_OCTAVE; i++) {
 			makeWhiteKey(octaveXStart + (i * WHITE_KEY_WIDTH), currentWhitePitch);
 			currentWhitePitch = currentWhitePitch + 2;
+			if (i == 2) {
+				currentWhitePitch--;
+			}
 		}
 
 		for (int i = 0; i < NUM_WHITE_KEYS_PER_OCTAVE; i++) {
@@ -101,6 +103,9 @@ public class Piano extends JPanel {
 				makeBlackKey(octaveXStart + (i * WHITE_KEY_WIDTH), currentBlackPitch);
 			}
 			currentBlackPitch = currentBlackPitch + 2;
+			if (i == 2) {
+				currentBlackPitch--;
+			}
 		}
 	}
 
@@ -119,7 +124,7 @@ public class Piano extends JPanel {
 			BLACK_KEY_HEIGHT
 		};
 		Polygon polygon = new Polygon(xCoords, yCoords, xCoords.length);
-		Key key = new Key(polygon, pitch, this);
+		Key key = new Key(polygon, pitch, this, true);
 
 		_keys.add(key);
 	}
@@ -139,7 +144,7 @@ public class Piano extends JPanel {
 			WHITE_KEY_HEIGHT
 		};
 		Polygon polygon = new Polygon(xCoords, yCoords, xCoords.length);
-		Key key = new Key(polygon, pitch, this);
+		Key key = new Key(polygon, pitch, this, false);
 
 		_keys.add(key);
 	}
