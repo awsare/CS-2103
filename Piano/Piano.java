@@ -75,7 +75,6 @@ public class Piano extends JPanel {
 		return _mouseListener;
 	}
 
-	// TODO: implement this method. You should create and use several helper methods to do so.
 	/**
 	 * Instantiate all the Key objects with their correct polygons and pitches, and
 	 * add them to the _keys array.
@@ -86,23 +85,30 @@ public class Piano extends JPanel {
 		}
 	}
 
-
+	/**
+	 * Draws an octave. Draws seven white keys first and five black keys on top in the correct order.
+	 * Assigns each key its correct pitch.
+	 */
 	private void makeOctave(int octaveXStart, int octavePitchStart) {
-		int currentWhitePitch = octavePitchStart;
 
+		int currentWhitePitch = octavePitchStart;
 		for (int i = 0; i < NUM_WHITE_KEYS_PER_OCTAVE; i++) {
 			makeWhiteKey(octaveXStart + (i * WHITE_KEY_WIDTH), currentWhitePitch);
-			currentWhitePitch += (i == 2) ? 1 : 2;
+			currentWhitePitch += (i == 2) ? 1 : 2; // correctly increments the pitch when a black key isn't next on the piano
 		}
 
 		
 		int currentBlackPitch = octavePitchStart + 1;
 		for (int i : BLACK_KEY_POSITIONS) {
 			makeBlackKey(octaveXStart + (i * WHITE_KEY_WIDTH), currentBlackPitch);
-			currentBlackPitch += (i == 1) ? 3 : 2;
+			currentBlackPitch += (i == 1) ? 3 : 2; // correctly increments the pitch for a gap in black keys
 		}
 	}
 
+	/**
+	 * Draws an octave. Draws seven white keys first and five black keys on top in the correct order.
+	 * Assigns each key its correct pitch.
+	 */
 	private void makeBlackKey(int keyXstart, int pitch) {
 		int[] xCoords = new int[] {
 			keyXstart + WHITE_KEY_WIDTH - (BLACK_KEY_WIDTH / 2),

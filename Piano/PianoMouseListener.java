@@ -17,7 +17,6 @@ public class PianoMouseListener extends MouseAdapter {
 		_keys = keys;
 	}
 
-	// TODO implement this method.
 	@Override
 	/**
 	 * This method is called by Swing whenever the user drags the mouse.
@@ -28,7 +27,6 @@ public class PianoMouseListener extends MouseAdapter {
 		playKey(e.getX(), e.getY());
 	}
 
-	// TODO implement this method.
 	@Override
 	/**
 	 * This method is called by Swing whenever the user presses the mouse.
@@ -43,7 +41,6 @@ public class PianoMouseListener extends MouseAdapter {
 		playKey(e.getX(), e.getY());
 	}
 
-	// TODO implement this method.
 	@Override
 	/**
 	 * This method is called by Swing whenever the user releases the mouse.
