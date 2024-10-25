@@ -24,7 +24,7 @@ public class PianoMouseListener extends MouseAdapter {
 	 * of the entire piano, of where the mouse is currently located.
 	 */
 	public void mouseDragged (MouseEvent e) {
-		playKey(e.getX(), e.getY());
+		handleMouse(e.getX(), e.getY());
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class PianoMouseListener extends MouseAdapter {
 		//	if (key.getPolygon().contains(e.getX(), e.getY())) {
 		// To turn a key "on", you could then write:
 		//      key.play(true);  // Note that the key should eventually be turned off!
-		playKey(e.getX(), e.getY());
+		handleMouse(e.getX(), e.getY());
 		System.out.println(e.getX() + "  " + e.getY());
 	}
 
@@ -52,12 +52,23 @@ public class PianoMouseListener extends MouseAdapter {
 		allKeysOff();
 	}
 
+
+	/**
+	 * This method loops through the key array and turns each key off.
+	 */
 	private void allKeysOff() {
 		for (Key key: _keys) {
 			key.play(false);
 		}
 	}
 
+	/**
+	 * This method returns a Key that follows the criteria given
+	 * @param mouseX is the x position of the mouse
+	 * @param mouseY is the y position of the mouse
+	 * @param isBlack is whether or not the desired Key should be black
+	 * @return returns the desired Key
+	 */
 	private Key findKeyToPlay(int mouseX, int mouseY, boolean isBlack) {
 		Key keyToPlay = null;
 
@@ -71,7 +82,12 @@ public class PianoMouseListener extends MouseAdapter {
 		return keyToPlay;
 	} 
 
-	private void playKey(int mouseX, int mouseY) {
+	/**
+	 * This method handles the mouse press or drag and plays the correct key
+	 * @param mouseX is the x position of the mouse
+	 * @param mouseY is the y position of the mouse
+	 */
+	private void handleMouse(int mouseX, int mouseY) {
 		Key keyToPlay = findKeyToPlay(mouseX, mouseY, true);
 
 		if (keyToPlay == null) {

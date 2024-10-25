@@ -26,24 +26,45 @@ class PianoTester {
 		_mouseListener = _piano.getMouseListener();
 	}
 
+	// Pressing the mouse on the upper leftmost pixel should cause the key to turn on.
 	@Test
 	void testClickUpperLeftMostPixel () {
-		// Pressing the mouse should cause the key to turn on.
 		_mouseListener.mousePressed(makeMouseEvent(0, 0));
 		assertTrue(_receiver.isKeyOn(Piano.START_PITCH));
 	}
 
+	// Pressing the mouse on the upper rightmost pixel should cause the key to turn on.
+	@Test
+	void testClickUpperRightMostPixel(){
+		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH-1, 0));
+		assertTrue(_receiver.isKeyOn(83));
+	}
+	
+	// Pressing the mouse on the lower rightmost pixel should cause the key to turn on.
+	@Test
+	void testClickLowerRightMostPixel(){
+		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH-1, Piano.HEIGHT-1));
+		assertTrue(_receiver.isKeyOn(83));
+	}
+
+	// Pressing the mouse on the lower leftmost pixel should cause the key to turn on.
+	@Test
+	void testClickLowerLeftMostPixel(){
+		_mouseListener.mousePressed(makeMouseEvent(0, Piano.HEIGHT-1));
+		assertTrue(_receiver.isKeyOn(Piano.START_PITCH));
+	}
+
+	// Test that pressing and dragging the mouse *within* the same key
+	// should cause the key to be turned on only once, not multiple times.
 	@Test
 	void testDragWithinKey () {
-		// Test that pressing and dragging the mouse *within* the same key
-		// should cause the key to be turned on only once, not multiple times.
-		// Use makeMouseEvent and TestReceiver.getKeyOnCount.
-		// TODO complete me
 		_mouseListener.mouseDragged(makeMouseEvent(0, 0));
 		_mouseListener.mouseDragged(makeMouseEvent(0, 1));
 		assertTrue(_receiver.getKeyOnCount(48) <= 1);
 	}
 
+	// Test that pressing and dragging the mouse between two keys
+	// should cause the keys to be turned on only once, not multiple times.
 	@Test
 	void testDragBetweenKeys () {
 		_mouseListener.mouseDragged(makeMouseEvent(25, 160));
@@ -52,27 +73,7 @@ class PianoTester {
 		_mouseListener.mouseDragged(makeMouseEvent(60, 160));
 		assertTrue(_receiver.isKeyOn(48) == false);
 		assertTrue(_receiver.isKeyOn(50) == true);
-	}
-	
-
-	// TODO write at least 3 more tests!
-	// ...
-
-	@Test
-	void testClickUpperRightMostPixel(){
-		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH-1, 0));
-		assertTrue(_receiver.isKeyOn(83));
-	}
-
-	@Test
-	void testClickLowerRightMostPixel(){
-		_mouseListener.mousePressed(makeMouseEvent(Piano.WIDTH-1, Piano.HEIGHT-1));
-		assertTrue(_receiver.isKeyOn(83));
-	}
-
-	@Test
-	void testClickLowerLeftMostPixel(){
-		_mouseListener.mousePressed(makeMouseEvent(0, Piano.HEIGHT-1));
-		assertTrue(_receiver.isKeyOn(Piano.START_PITCH));
+		assertTrue(_receiver.getKeyOnCount(48) <= 1);
+		assertTrue(_receiver.getKeyOnCount(50) <= 1);
 	}
 }

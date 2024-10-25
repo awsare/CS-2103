@@ -14,13 +14,13 @@ public class Piano extends JPanel {
 	public static int WHITE_KEY_HEIGHT = 200;
 	public static int BLACK_KEY_HEIGHT = WHITE_KEY_HEIGHT/2;
 	public static int NUM_WHITE_KEYS_PER_OCTAVE = 7;
-	public static int NUM_BLACK_KEYS_PER_OCTAVE = 5;
+	public static int NUM_BLACK_KEYS_PER_OCTAVE = 5; // added number of black keys per octave
 	public static int NUM_OCTAVES = 3;
 	public static int NUM_WHITE_KEYS = NUM_WHITE_KEYS_PER_OCTAVE * NUM_OCTAVES;
-	public static int KEYS_PER_OCTAVE = NUM_BLACK_KEYS_PER_OCTAVE + NUM_WHITE_KEYS_PER_OCTAVE;
+	public static int KEYS_PER_OCTAVE = NUM_BLACK_KEYS_PER_OCTAVE + NUM_WHITE_KEYS_PER_OCTAVE; // added keys per octave
 	public static int WIDTH = NUM_WHITE_KEYS * WHITE_KEY_WIDTH;
 	public static int HEIGHT = WHITE_KEY_HEIGHT;
-	public static int[] BLACK_KEY_POSITIONS = {0, 1, 3, 4, 5};
+	public static int[] BLACK_KEY_POSITIONS = {0, 1, 3, 4, 5}; // added the position of the black keys, used for making black keys with correct spacing
 		
 	private java.util.List<Key> _keys = new ArrayList<>();
 	private Receiver _receiver;
@@ -86,8 +86,9 @@ public class Piano extends JPanel {
 	}
 
 	/**
-	 * Draws an octave. Draws seven white keys first and five black keys on top in the correct order.
-	 * Assigns each key its correct pitch.
+	 * Draws an octave. Draws seven white keys first and five black keys on top in the correct order. Assigns each key its correct pitch.
+	 * @param octaveXStart is the x position where the octave should be drawn
+	 * @param octavePitchStart is the pitch the octave should start at
 	 */
 	private void makeOctave(int octaveXStart, int octavePitchStart) {
 
@@ -106,8 +107,9 @@ public class Piano extends JPanel {
 	}
 
 	/**
-	 * Draws an octave. Draws seven white keys first and five black keys on top in the correct order.
-	 * Assigns each key its correct pitch.
+	 * This method makes a black key at the specified x position and with the specified pitch
+	 * @param keyXstart is the x position to make the key at
+	 * @param pitch is the pitch to make the key play
 	 */
 	private void makeBlackKey(int keyXstart, int pitch) {
 		int[] xCoords = new int[] {
@@ -129,6 +131,11 @@ public class Piano extends JPanel {
 		_keys.add(key);
 	}
 
+	/**
+	 * This method makes a white key at the specified x position and with the specified pitch
+	 * @param keyXstart is the x position to make the key at
+	 * @param pitch is the pitch to make the key play
+	 */
 	private void makeWhiteKey(int keyXstart, int pitch) {
 		int[] xCoords = new int[] {
 			keyXstart,
@@ -148,7 +155,6 @@ public class Piano extends JPanel {
 
 		_keys.add(key);
 	}
-
 
 	// DO NOT MODIFY THIS METHOD.
 	@Override
