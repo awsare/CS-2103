@@ -43,6 +43,16 @@ class PianoTester {
 		_mouseListener.mouseDragged(makeMouseEvent(0, 1));
 		assertTrue(_receiver.getKeyOnCount(48) <= 1);
 	}
+
+	@Test
+	void testDragBetweenKeys () {
+		_mouseListener.mouseDragged(makeMouseEvent(25, 160));
+		assertTrue(_receiver.isKeyOn(48) == true);
+		assertTrue(_receiver.isKeyOn(50) == false);
+		_mouseListener.mouseDragged(makeMouseEvent(60, 160));
+		assertTrue(_receiver.isKeyOn(48) == false);
+		assertTrue(_receiver.isKeyOn(50) == true);
+	}
 	
 
 	// TODO write at least 3 more tests!
@@ -65,6 +75,4 @@ class PianoTester {
 		_mouseListener.mousePressed(makeMouseEvent(0, Piano.HEIGHT-1));
 		assertTrue(_receiver.isKeyOn(Piano.START_PITCH));
 	}
-
-
 }
