@@ -21,6 +21,7 @@ public class Piano extends JPanel {
 	public static int WIDTH = NUM_WHITE_KEYS * WHITE_KEY_WIDTH;
 	public static int HEIGHT = WHITE_KEY_HEIGHT;
 	public static int[] BLACK_KEY_POSITIONS = {0, 1, 3, 4, 5}; // added the position of the black keys, used for making black keys with correct spacing
+	public static int END_PITCH = START_PITCH + (NUM_OCTAVES * KEYS_PER_OCTAVE) - 1; // added end pitch to reduce redundancy in test cases
 		
 	private java.util.List<Key> _keys = new ArrayList<>();
 	private Receiver _receiver;

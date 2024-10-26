@@ -39,7 +39,7 @@ public class PianoMouseListener extends MouseAdapter {
 		// To turn a key "on", you could then write:
 		//      key.play(true);  // Note that the key should eventually be turned off!
 		handleMouse(e.getX(), e.getY());
-		System.out.println(e.getX() + "  " + e.getY());
+		System.out.println("Mouse X: " + e.getX() + ", Mouse Y: " + e.getY());
 	}
 
 	@Override
