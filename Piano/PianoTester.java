@@ -31,10 +31,10 @@ class PianoTester {
 	// Pressing the mouse on the left most white key should cause the key to turn on.
 	@Test
 	void testClickLeftMostWhiteKey () {
-		int X_LEFT = 0;
-		int X_RIGHT = Piano.WHITE_KEY_WIDTH-1;
-		int Y_TOP = 0;
-		int Y_BOTTOM = Piano.WHITE_KEY_HEIGHT-1;
+		final int X_LEFT = 0;
+		final int X_RIGHT = Piano.WHITE_KEY_WIDTH-1;
+		final int Y_TOP = 0;
+		final int Y_BOTTOM = Piano.WHITE_KEY_HEIGHT-1;
 
 		// top left pixel
 		assertTrue(!_receiver.isKeyOn(Piano.START_PITCH));
@@ -67,10 +67,10 @@ class PianoTester {
 	// Pressing the mouse on the right most white key should cause the key to turn on.
 	@Test
 	void testClickRightMostWhiteKey() {
-		int X_LEFT = (Piano.NUM_WHITE_KEYS-1) * Piano.WHITE_KEY_WIDTH;
-		int X_RIGHT = Piano.NUM_WHITE_KEYS * Piano.WHITE_KEY_WIDTH-1;
-		int Y_TOP = 0;
-		int Y_BOTTOM = Piano.WHITE_KEY_HEIGHT-1;
+		final int X_LEFT = (Piano.NUM_WHITE_KEYS-1) * Piano.WHITE_KEY_WIDTH;
+		final int X_RIGHT = Piano.NUM_WHITE_KEYS * Piano.WHITE_KEY_WIDTH-1;
+		final int Y_TOP = 0;
+		final int Y_BOTTOM = Piano.WHITE_KEY_HEIGHT-1;
 
 		// top left pixel
 		assertTrue(!_receiver.isKeyOn(Piano.END_PITCH));
@@ -103,13 +103,13 @@ class PianoTester {
 	// Pressing the mouse on the a middle white key (one with two black keys on top of it) should cause the key to turn on.
 	@Test
 	void testClickMiddleWhiteKey() {
-		int PITCH_TO_TEST = 67;
-		int WHITE_KEY_NUM = 12;
+		final int PITCH_TO_TEST = 67;
+		final int WHITE_KEY_NUM = 12;
 
-		int X_LEFT = (WHITE_KEY_NUM - 1) * Piano.WHITE_KEY_WIDTH;
-		int X_RIGHT = (WHITE_KEY_NUM) * Piano.WHITE_KEY_WIDTH - 1;
-		int Y_TOP = 0;
-		int Y_BOTTOM = Piano.WHITE_KEY_HEIGHT - 1;
+		final int X_LEFT = (WHITE_KEY_NUM - 1) * Piano.WHITE_KEY_WIDTH;
+		final int X_RIGHT = (WHITE_KEY_NUM) * Piano.WHITE_KEY_WIDTH - 1;
+		final int Y_TOP = 0;
+		final int Y_BOTTOM = Piano.WHITE_KEY_HEIGHT - 1;
 
 		// top left pixel
 		assertTrue(!_receiver.isKeyOn(PITCH_TO_TEST));
@@ -142,12 +142,12 @@ class PianoTester {
 	// Pressing the mouse on the a black key should cause the key to turn on.
 	@Test
 	void testClickBlackKey() {
-		int PITCH_TO_TEST = Piano.START_PITCH + 1;
+		final int PITCH_TO_TEST = Piano.START_PITCH + 1;
 
-		int X_LEFT = Piano.WHITE_KEY_WIDTH - Piano.BLACK_KEY_WIDTH/2;
-		int X_RIGHT = Piano.WHITE_KEY_WIDTH + Piano.BLACK_KEY_WIDTH/2 -1;
-		int Y_TOP = 0;
-		int Y_BOTTOM = Piano.BLACK_KEY_HEIGHT-1;
+		final int X_LEFT = Piano.WHITE_KEY_WIDTH - Piano.BLACK_KEY_WIDTH/2;
+		final int X_RIGHT = Piano.WHITE_KEY_WIDTH + Piano.BLACK_KEY_WIDTH/2 -1;
+		final int Y_TOP = 0;
+		final int Y_BOTTOM = Piano.BLACK_KEY_HEIGHT-1;
 
 		// top left pixel
 		assertTrue(!_receiver.isKeyOn(PITCH_TO_TEST));
@@ -183,8 +183,8 @@ class PianoTester {
 	// should cause the key to be turned on only once, not multiple times.
 	@Test
 	void testDragWithinKey () {
-		int X = 0;
-		int Y = 0;
+		final int X = 0;
+		final int Y = 0;
 
 		assertTrue(_receiver.getKeyOnCount(Piano.START_PITCH) == 0);
 		_mouseListener.mouseDragged(makeMouseEvent(X, Y));
@@ -196,9 +196,9 @@ class PianoTester {
 	// should cause the keys to be turned on only once, not multiple times.
 	@Test
 	void testDragBetweenWhiteKeys () {
-		int X_LEFT = Piano.WHITE_KEY_WIDTH-1;
-		int X_RIGHT = Piano.WHITE_KEY_WIDTH;
-		int Y = Piano.WHITE_KEY_HEIGHT-1;
+		final int X_LEFT = Piano.WHITE_KEY_WIDTH-1;
+		final int X_RIGHT = Piano.WHITE_KEY_WIDTH;
+		final int Y = Piano.WHITE_KEY_HEIGHT-1;
 
 		int FIRST_WHITE_KEY_PITCH = Piano.START_PITCH;
 		int SECOND_WHITE_KEY_PITCH = FIRST_WHITE_KEY_PITCH + 2;
@@ -229,12 +229,12 @@ class PianoTester {
 	// should cause the first key to be turned on twice and the second key to be turned on once.
 	@Test
 	void testDragBackToWhiteKey () {
-		int X_LEFT = Piano.WHITE_KEY_WIDTH-1;
-		int X_RIGHT = Piano.WHITE_KEY_WIDTH;
-		int Y = Piano.WHITE_KEY_HEIGHT-1;
+		final int X_LEFT = Piano.WHITE_KEY_WIDTH-1;
+		final int X_RIGHT = Piano.WHITE_KEY_WIDTH;
+		final int Y = Piano.WHITE_KEY_HEIGHT-1;
 
-		int FIRST_WHITE_KEY_PITCH = Piano.START_PITCH;
-		int SECOND_WHITE_KEY_PITCH = FIRST_WHITE_KEY_PITCH + 2;
+		final int FIRST_WHITE_KEY_PITCH = Piano.START_PITCH;
+		final int SECOND_WHITE_KEY_PITCH = FIRST_WHITE_KEY_PITCH + 2;
 
 		assertTrue(_receiver.isKeyOn(FIRST_WHITE_KEY_PITCH) == false);
 		assertTrue(_receiver.isKeyOn(SECOND_WHITE_KEY_PITCH) == false);
@@ -267,10 +267,10 @@ class PianoTester {
 	// should cause the keys to be turned on only once, not multiple times.
 	@Test
 	void testDragBetweenBlackAndWhiteKeys () {
-		int X_LEFT = Piano.WHITE_KEY_WIDTH;
-		int X_MID = Piano.WHITE_KEY_WIDTH + Piano.WHITE_KEY_WIDTH/2;
-		int X_RIGHT = Piano.WHITE_KEY_WIDTH + Piano.WHITE_KEY_WIDTH;
-		int Y = 0;
+		final int X_LEFT = Piano.WHITE_KEY_WIDTH;
+		final int X_MID = Piano.WHITE_KEY_WIDTH + Piano.WHITE_KEY_WIDTH/2;
+		final int X_RIGHT = Piano.WHITE_KEY_WIDTH + Piano.WHITE_KEY_WIDTH;
+		final int Y = 0;
 
 		int FIRST_BLACK_KEY_PITCH = 49;
 		int WHITE_KEY_PITCH = FIRST_BLACK_KEY_PITCH + 1;
