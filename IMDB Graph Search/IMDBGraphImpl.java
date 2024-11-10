@@ -10,8 +10,8 @@ public class IMDBGraphImpl implements IMDBGraph {
 	// "C:/Users/sarah/IMDB". (These are made-up examples but give a sense
 	// of the required syntax.)
 	//public static final String IMDB_DIRECTORY = "/Users/awsare/Documents/CS2103/IMDB Graph Search";
-	public static final String IMDB_DIRECTORY = "/Users/awsare/Documents/CS2103/IMDB Graph Search";
-	private static final int PROGRESS_FREQUENCY = 10000;
+	public static final String IMDB_DIRECTORY = "C:/Users/nwirt/Documents/GitHub/CS-2103/IMDB Graph Search"; 
+	private static final int PROGRESS_FREQUENCY = 1;
 
 	private static class IMDBNode implements Node {
 		private final String _name;
@@ -108,6 +108,18 @@ public class IMDBGraphImpl implements IMDBGraph {
 					// and set the neighbors of the new actor node appropriately.
 					// Also set the actor to be a neighbor of each of the actor's movies.
 					final IMDBNode actorNode = new IMDBNode(finalName);
+					_actorNamesToNodes.put(finalName, actorNode);
+					for (String elem : knownFor) {
+						if (idsToTitles.get(elem) != null) {
+							actorNode._neighbors.add((IMDBNode) getMovie(idsToTitles.get(elem)));
+							((IMDBNode) getMovie(idsToTitles.get(elem)))._neighbors.add(actorNode);
+							//System.out.println(finalName + " in " + idsToTitles.get(elem));
+						}				
+
+						
+					}
+					
+					
 					// TODO: finish me...
 				}
 			}
@@ -192,7 +204,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 		try {
 			final IMDBGraph graph = new IMDBGraphImpl(IMDB_DIRECTORY + "/someActors.tsv",
 			                                          IMDB_DIRECTORY + "/someMovies.tsv");
-			System.out.println(graph.getActors().size());
+			System.out.println("Size: " + graph.getActors().size());
 
 			final GraphSearchEngine graphSearcher = new GraphSearchEngineImpl();
 			while (true) {
