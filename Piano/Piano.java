@@ -62,7 +62,7 @@ public class Piano extends JPanel {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
 		setReceiver(receiver);
-		_mouseListener = new PianoMouseListener(_keys);
+		_mouseListener = new PianoMouseListener(_keys);		
 		addMouseListener(_mouseListener);
 		addMouseMotionListener(_mouseListener);
 		makeKeys();
