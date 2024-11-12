@@ -9,8 +9,8 @@ public class IMDBGraphImpl implements IMDBGraph {
 	// this might be: "/Users/sarah/IMDB". On Windows, this might be:
 	// "C:/Users/sarah/IMDB". (These are made-up examples but give a sense
 	// of the required syntax.)
-	//public static final String IMDB_DIRECTORY = "/Users/awsare/Documents/CS2103/IMDB Graph Search";
-	public static final String IMDB_DIRECTORY = "C:/Users/nwirt/Documents/GitHub/CS-2103/IMDB Graph Search"; 
+	public static final String IMDB_DIRECTORY = "/Users/awsare/Documents/CS2103/IMDB Graph Search";
+	//public static final String IMDB_DIRECTORY = "C:/Users/nwirt/Documents/GitHub/CS-2103/IMDB Graph Search"; 
 	private static final int PROGRESS_FREQUENCY = 1;
 
 	private static class IMDBNode implements Node {
@@ -98,7 +98,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 				if (profession.contains("actor") || profession.contains("actress")) {
 					// Show progress
 					if (idx++ % PROGRESS_FREQUENCY == 0) {
-						System.out.println(name);
+						System.out.println("Processing actor " + name);
 					}
 
 					// Give each person with the same name a unique "finalName".
@@ -110,17 +110,17 @@ public class IMDBGraphImpl implements IMDBGraph {
 					final IMDBNode actorNode = new IMDBNode(finalName);
 					_actorNamesToNodes.put(finalName, actorNode);
 					for (String elem : knownFor) {
-						if (idsToTitles.get(elem) != null) {
-							actorNode._neighbors.add((IMDBNode) getMovie(idsToTitles.get(elem)));
-							((IMDBNode) getMovie(idsToTitles.get(elem)))._neighbors.add(actorNode);
-							//System.out.println(finalName + " in " + idsToTitles.get(elem));
-						}				
 
-						
+						System.out.println("Movie ID found: " + elem);
+
+						if (idsToTitles.get(elem) != null) {
+							IMDBNode movieNode = (IMDBNode) getMovie(idsToTitles.get(elem));
+							actorNode._neighbors.add(movieNode);
+							movieNode._neighbors.add(actorNode);
+
+							System.out.println(finalName + " acts in " + idsToTitles.get(elem));
+						}
 					}
-					
-					
-					// TODO: finish me...
 				}
 			}
 		}
@@ -152,7 +152,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 				if (type.contains("movie")) {
 					final String title = fields[2];
 					if (idx++ % PROGRESS_FREQUENCY == 0) {
-						System.out.println(title);
+						System.out.println("Processing movie " + title);
 					}
 
 					final String finalTitle = ensureUniqueName(title, _movieNamesToNodes);
@@ -202,9 +202,10 @@ public class IMDBGraphImpl implements IMDBGraph {
 	 */
 	public static void main (String[] args) {
 		try {
-			final IMDBGraph graph = new IMDBGraphImpl(IMDB_DIRECTORY + "/someActors.tsv",
-			                                          IMDB_DIRECTORY + "/someMovies.tsv");
-			System.out.println("Size: " + graph.getActors().size());
+			final IMDBGraph graph = new IMDBGraphImpl(IMDB_DIRECTORY + "/testActors.tsv",
+			                                          IMDB_DIRECTORY + "/testMovies.tsv");
+			System.out.println("Actors size: " + graph.getActors().size());
+			System.out.println("Movies size: " + graph.getMovies().size());
 
 			final GraphSearchEngine graphSearcher = new GraphSearchEngineImpl();
 			while (true) {
