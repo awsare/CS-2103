@@ -213,35 +213,56 @@ public class IMDBGraphImpl implements IMDBGraph {
 	 */
 	public static void main (String[] args) {
 		try {
+
 			final IMDBGraph graph = new IMDBGraphImpl(IMDB_DIRECTORY + "/name.basics.tsv.gz",
 			                                          IMDB_DIRECTORY + "/title.basics.tsv.gz");
-			System.out.println("Actors size: " + graph.getActors().size());
+
+			System.out.println("\nActors size: " + graph.getActors().size());
 			System.out.println("Movies size: " + graph.getMovies().size());
 
 			final GraphSearchEngine graphSearcher = new GraphSearchEngineImpl();
+
 			while (true) {
 				System.out.println();
 				final Scanner s = new Scanner(System.in);
-				System.out.print("Actor from: ");
+
+				System.out.print("Actor 1: ");
 				final String actorName1 = s.nextLine().trim();
-				System.out.print("Actor to: ");
-				final String actorName2 = s.nextLine().trim();
 				final Node node1 = graph.getActor(actorName1);
+				
+				if (node1 == null) {
+					System.out.println("Actor 1 not found.");
+					continue;
+				}
+
+				System.out.print("Actor 2: ");
+				final String actorName2 = s.nextLine().trim();
 				final Node node2 = graph.getActor(actorName2);
-				if (node1 != null && node2 != null) {
-					System.out.println("Finding shortest path from " + node1.getName() + " to " + node2.getName() + "...\n");
-					List<Node> shortestPath = graphSearcher.findShortestPath(node1, node2);
-					if (shortestPath != null) {
-						for (Node node : shortestPath) {
-							System.out.println(node.getName());
-						}
-					} else {
-						System.out.println("No path");
+
+				if (node2 == null) {
+					System.out.println("Actor 2 not found.");
+					continue;
+				}
+
+				System.out.println("Finding shortest path from " + node1.getName() + " to " + node2.getName() + "...\n");
+				long startTime = System.currentTimeMillis();
+
+				List<Node> shortestPath = graphSearcher.findShortestPath(node1, node2);
+
+				double searchTimeSeconds = (System.currentTimeMillis() - startTime) / 1000.0;
+				System.out.println("Search took " + searchTimeSeconds + " seconds.");
+
+				if (shortestPath != null) {
+					System.out.println("Path is " + shortestPath.size() + " nodes long.\n");
+					for (Node node : shortestPath) {
+						System.out.println(node.getName());
 					}
+				} else {
+					System.out.println("No path found.");
 				}
 			}
 		} catch (IOException ioe) {
-			System.out.println("Couldn't load data");
+			System.out.println("Couldn't load data.");
 		}
 	}
 }

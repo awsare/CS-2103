@@ -11,14 +11,12 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
 	}
 
 	public List<Node> findShortestPath (Node from, Node to) {
-		Queue<Node> queue = new LinkedList<>();
-		LinkedList<Node> alreadyQueued = new LinkedList<>();
-		Map<Node, Node> nodeBefore = new HashMap<>();
-		queue.add(from);
-		alreadyQueued.add(from);
+		Queue<Node> toSearch = new LinkedList<>();
+		Map<Node, Node> childToParent = new HashMap<>();
+		toSearch.add(from);
 
-		while (!queue.isEmpty()) {
-			Node currentNode = queue.remove();
+		while (!toSearch.isEmpty()) {
+			Node currentNode = toSearch.remove();
 
 			//System.out.println(currentNode.getName());
 
@@ -28,7 +26,7 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
 				path.add(backtrackingNode);
 
 				while (backtrackingNode != from) {
-					backtrackingNode = nodeBefore.get(backtrackingNode);
+					backtrackingNode = childToParent.get(backtrackingNode);
 					path.add(backtrackingNode);
 				}
 				
@@ -37,10 +35,9 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
 				return path;
 			} else {
 				for (Node neighbor : currentNode.getNeighbors()) {
-					if (!alreadyQueued.contains(neighbor)) {
-						queue.add(neighbor);
-						alreadyQueued.add(currentNode);
-						nodeBefore.put(neighbor, currentNode);
+					if (!childToParent.containsKey(neighbor) || neighbor.equals(from)) {
+						toSearch.add(neighbor);
+						childToParent.put(neighbor, currentNode);
 					}
 				}
 			}
