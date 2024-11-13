@@ -14,5 +14,5 @@ interface GraphSearchEngine {
 	 * @return a shortest path in the form of a List of Node objects
 	 * or null if no path exists.
 	 */
-	public List<Node> findShortestPath (Node s, Node t);
+	public List<Node> findShortestPath (Node from, Node to);
 }

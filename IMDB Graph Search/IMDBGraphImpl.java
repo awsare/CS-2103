@@ -76,6 +76,8 @@ public class IMDBGraphImpl implements IMDBGraph {
 	 * @param idsToTitles a map from the movie ID to the movie title.
 	 */
 	private void processActors (String filename, Map<String, String> idsToTitles) throws IOException {
+		System.out.print("Processing actors... ");
+
 		InputStream inputStream = new FileInputStream(filename);
 		if (filename.endsWith(".gz")) {
 			inputStream = new GZIPInputStream(inputStream);
@@ -98,7 +100,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 				if (profession.contains("actor") || profession.contains("actress")) {
 					// Show progress
 					if (idx++ % PROGRESS_FREQUENCY == 0) {
-						System.out.println("Processing actor " + name);
+						//System.out.println("Processing actor " + name);
 					}
 
 					// Give each person with the same name a unique "finalName".
@@ -109,21 +111,25 @@ public class IMDBGraphImpl implements IMDBGraph {
 					// Also set the actor to be a neighbor of each of the actor's movies.
 					final IMDBNode actorNode = new IMDBNode(finalName);
 					_actorNamesToNodes.put(finalName, actorNode);
+					
 					for (String elem : knownFor) {
 
-						System.out.println("Movie ID found: " + elem);
+						//System.out.println("Movie ID found: " + elem);
 
 						if (idsToTitles.get(elem) != null) {
 							IMDBNode movieNode = (IMDBNode) getMovie(idsToTitles.get(elem));
+
 							actorNode._neighbors.add(movieNode);
 							movieNode._neighbors.add(actorNode);
 
-							System.out.println(finalName + " acts in " + idsToTitles.get(elem));
+							//System.out.println(finalName + " acts in " + idsToTitles.get(elem));
 						}
 					}
 				}
 			}
 		}
+
+		System.out.println(" finished!");
 	}
 
 	/**
@@ -132,6 +138,8 @@ public class IMDBGraphImpl implements IMDBGraph {
 	 * @return a map from the movie ID to the movie title.
 	 */
 	private Map<String, String> processTitles (String filename) throws IOException {
+		System.out.print("Processing movies... ");
+
 		final Map<String, String> idsToTitles = new HashMap<>();
 
 		InputStream inputStream = new FileInputStream(filename);
@@ -152,7 +160,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 				if (type.contains("movie")) {
 					final String title = fields[2];
 					if (idx++ % PROGRESS_FREQUENCY == 0) {
-						System.out.println("Processing movie " + title);
+						//System.out.println("Processing movie " + title);
 					}
 
 					final String finalTitle = ensureUniqueName(title, _movieNamesToNodes);
@@ -163,6 +171,9 @@ public class IMDBGraphImpl implements IMDBGraph {
 				}
 			}
 		}
+
+		System.out.println(" finished!");
+
 		return idsToTitles;
 	}
 
@@ -202,23 +213,24 @@ public class IMDBGraphImpl implements IMDBGraph {
 	 */
 	public static void main (String[] args) {
 		try {
-			final IMDBGraph graph = new IMDBGraphImpl(IMDB_DIRECTORY + "/testActors.tsv",
-			                                          IMDB_DIRECTORY + "/testMovies.tsv");
+			final IMDBGraph graph = new IMDBGraphImpl(IMDB_DIRECTORY + "/name.basics.tsv.gz",
+			                                          IMDB_DIRECTORY + "/title.basics.tsv.gz");
 			System.out.println("Actors size: " + graph.getActors().size());
 			System.out.println("Movies size: " + graph.getMovies().size());
 
 			final GraphSearchEngine graphSearcher = new GraphSearchEngineImpl();
 			while (true) {
+				System.out.println();
 				final Scanner s = new Scanner(System.in);
-				System.out.println("Actor 1:");
+				System.out.print("Actor from: ");
 				final String actorName1 = s.nextLine().trim();
-				System.out.println("Actor 2:");
+				System.out.print("Actor to: ");
 				final String actorName2 = s.nextLine().trim();
 				final Node node1 = graph.getActor(actorName1);
 				final Node node2 = graph.getActor(actorName2);
 				if (node1 != null && node2 != null) {
+					System.out.println("Finding shortest path from " + node1.getName() + " to " + node2.getName() + "...\n");
 					List<Node> shortestPath = graphSearcher.findShortestPath(node1, node2);
-					System.out.println(node1 + " " + node2);
 					if (shortestPath != null) {
 						for (Node node : shortestPath) {
 							System.out.println(node.getName());
