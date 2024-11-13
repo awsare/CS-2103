@@ -11,7 +11,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 	// of the required syntax.)
 	public static final String IMDB_DIRECTORY = "/Users/awsare/Documents/CS2103/IMDB Graph Search";
 	//public static final String IMDB_DIRECTORY = "C:/Users/nwirt/Documents/GitHub/CS-2103/IMDB Graph Search"; 
-	private static final int PROGRESS_FREQUENCY = 1;
+	private static final int PROGRESS_FREQUENCY = 100000;
 
 	private static class IMDBNode implements Node {
 		private final String _name;
@@ -100,7 +100,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 				if (profession.contains("actor") || profession.contains("actress")) {
 					// Show progress
 					if (idx++ % PROGRESS_FREQUENCY == 0) {
-						//System.out.println("Processing actor " + name);
+						System.out.print("*");
 					}
 
 					// Give each person with the same name a unique "finalName".
@@ -129,7 +129,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 			}
 		}
 
-		System.out.println(" finished!");
+		System.out.println(" ...finished!");
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 				if (type.contains("movie")) {
 					final String title = fields[2];
 					if (idx++ % PROGRESS_FREQUENCY == 0) {
-						//System.out.println("Processing movie " + title);
+						System.out.print("*");
 					}
 
 					final String finalTitle = ensureUniqueName(title, _movieNamesToNodes);
@@ -172,7 +172,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 			}
 		}
 
-		System.out.println(" finished!");
+		System.out.println(" ...finished!");
 
 		return idsToTitles;
 	}
@@ -250,12 +250,17 @@ public class IMDBGraphImpl implements IMDBGraph {
 				List<Node> shortestPath = graphSearcher.findShortestPath(node1, node2);
 
 				double searchTimeSeconds = (System.currentTimeMillis() - startTime) / 1000.0;
-				System.out.println("Search took " + searchTimeSeconds + " seconds.");
+				System.out.println("Breadth-first graph search took " + searchTimeSeconds + " seconds.");
 
 				if (shortestPath != null) {
-					System.out.println("Path is " + shortestPath.size() + " nodes long.\n");
-					for (Node node : shortestPath) {
-						System.out.println(node.getName());
+					System.out.println("Shortest path is " + shortestPath.size() + " nodes long.\n");
+					for (int i = 0; i < shortestPath.size(); i++) {
+						if (i % 2 == 0) {
+							System.out.print(i + 1 + ".\t[Actor] ");
+						} else {
+							System.out.print(i + 1 + ".\t[Movie] ");
+						}
+						System.out.println(shortestPath.get(i).getName());
 					}
 				} else {
 					System.out.println("No path found.");
