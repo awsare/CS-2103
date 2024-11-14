@@ -13,6 +13,11 @@ public class IMDBGraphImpl implements IMDBGraph {
 	//public static final String IMDB_DIRECTORY = "C:/Users/nwirt/Documents/GitHub/CS-2103/IMDB Graph Search"; 
 	private static final int PROGRESS_FREQUENCY = 100000;
 
+	private static final String GREEN_OUTPUT = "\033[1;92m";
+	private static final String YELLOW_OUTPUT = "\033[1;93m";
+	private static final String PURPLE_OUTPUT = "\033[1;95m";
+	private static final String RESET_OUTPUT = "\033[0m";
+
 	private static class IMDBNode implements Node {
 		private final String _name;
 		private final Collection<IMDBNode> _neighbors;
@@ -76,7 +81,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 	 * @param idsToTitles a map from the movie ID to the movie title.
 	 */
 	private void processActors (String filename, Map<String, String> idsToTitles) throws IOException {
-		System.out.print("Processing actors... ");
+		System.out.print("Processing actors... " + GREEN_OUTPUT);
 
 		InputStream inputStream = new FileInputStream(filename);
 		if (filename.endsWith(".gz")) {
@@ -109,18 +114,20 @@ public class IMDBGraphImpl implements IMDBGraph {
 					// Create a new node for the actor, add them to _actorNamesToNodes,
 					// and set the neighbors of the new actor node appropriately.
 					// Also set the actor to be a neighbor of each of the actor's movies.
-					final IMDBNode actorNode = new IMDBNode(finalName);
+					final IMDBNode actorNode = new IMDBNode(finalName); // makes actor node
 					_actorNamesToNodes.put(finalName, actorNode);
 					
-					for (String elem : knownFor) {
+					for (String id : knownFor) {  // loops through known for movies
 
 						//System.out.println("Movie ID found: " + elem);
 
-						if (idsToTitles.get(elem) != null) {
-							IMDBNode movieNode = (IMDBNode) getMovie(idsToTitles.get(elem));
+						String title = idsToTitles.get(id); // converts id to title
 
-							actorNode._neighbors.add(movieNode);
-							movieNode._neighbors.add(actorNode);
+						if (title != null) {
+							IMDBNode movieNode = (IMDBNode) getMovie(title); // gets movie from title
+
+							actorNode._neighbors.add(movieNode); // links actor to movie
+							movieNode._neighbors.add(actorNode); // links movie to actor
 
 							//System.out.println(finalName + " acts in " + idsToTitles.get(elem));
 						}
@@ -129,7 +136,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 			}
 		}
 
-		System.out.println(" ...finished!");
+		System.out.println(RESET_OUTPUT + " ...finished!");
 	}
 
 	/**
@@ -138,7 +145,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 	 * @return a map from the movie ID to the movie title.
 	 */
 	private Map<String, String> processTitles (String filename) throws IOException {
-		System.out.print("Processing movies... ");
+		System.out.print("Processing movies... " + GREEN_OUTPUT);
 
 		final Map<String, String> idsToTitles = new HashMap<>();
 
@@ -172,7 +179,7 @@ public class IMDBGraphImpl implements IMDBGraph {
 			}
 		}
 
-		System.out.println(" ...finished!");
+		System.out.println(RESET_OUTPUT + " ...finished!");
 
 		return idsToTitles;
 	}
@@ -217,8 +224,8 @@ public class IMDBGraphImpl implements IMDBGraph {
 			final IMDBGraph graph = new IMDBGraphImpl(IMDB_DIRECTORY + "/name.basics.tsv.gz",
 			                                          IMDB_DIRECTORY + "/title.basics.tsv.gz");
 
-			System.out.println("\nActors size: " + graph.getActors().size());
-			System.out.println("Movies size: " + graph.getMovies().size());
+			System.out.println("\nActors size: " + GREEN_OUTPUT + graph.getActors().size() + RESET_OUTPUT);
+			System.out.println("Movies size: " + GREEN_OUTPUT +  graph.getMovies().size() + RESET_OUTPUT);
 
 			final GraphSearchEngine graphSearcher = new GraphSearchEngineImpl();
 
@@ -244,23 +251,28 @@ public class IMDBGraphImpl implements IMDBGraph {
 					continue;
 				}
 
-				System.out.println("Finding shortest path from " + node1.getName() + " to " + node2.getName() + "...\n");
+				System.out.println("Finding shortest path from " + GREEN_OUTPUT + node1.getName() + RESET_OUTPUT + " to " + GREEN_OUTPUT + node2.getName() + RESET_OUTPUT + "...\n");
 				long startTime = System.currentTimeMillis();
 
 				List<Node> shortestPath = graphSearcher.findShortestPath(node1, node2);
 
 				double searchTimeSeconds = (System.currentTimeMillis() - startTime) / 1000.0;
-				System.out.println("Breadth-first graph search took " + searchTimeSeconds + " seconds.");
+				System.out.println("Breadth-first graph search took " + GREEN_OUTPUT + searchTimeSeconds + RESET_OUTPUT + " seconds.");
 
 				if (shortestPath != null) {
-					System.out.println("Shortest path is " + shortestPath.size() + " nodes long.\n");
+					System.out.println("Shortest path is " + GREEN_OUTPUT + shortestPath.size() + RESET_OUTPUT + " nodes long.\n");
 					for (int i = 0; i < shortestPath.size(); i++) {
 						if (i % 2 == 0) {
 							System.out.print(i + 1 + ".\t[Actor] ");
 						} else {
 							System.out.print(i + 1 + ".\t[Movie] ");
 						}
-						System.out.println(shortestPath.get(i).getName());
+
+						if (i == 0 || i == shortestPath.size() - 1) {
+							System.out.println(GREEN_OUTPUT + shortestPath.get(i).getName() + RESET_OUTPUT);
+						} else {
+							System.out.println(shortestPath.get(i).getName());
+						}
 					}
 				} else {
 					System.out.println("No path found.");
