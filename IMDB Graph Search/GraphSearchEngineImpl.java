@@ -10,6 +10,13 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
 	public GraphSearchEngineImpl () {
 	}
 
+
+	/**
+	 * finds shortest path from actor 1 to actor 2
+	 * @param from is actor to search from
+	 * @param to is actor to search to
+	 * @return path from actor 1 to actor 2
+	 */
 	public List<Node> findShortestPath (Node from, Node to) {
 		Queue<Node> toSearch = new LinkedList<>(); // queue to search
 		Map<Node, Node> getToNodeFrom = new HashMap<>(); // hashmap that has a node mapped to another node that it was searched from
