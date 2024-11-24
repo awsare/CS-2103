@@ -14,11 +14,11 @@ public class Event implements Comparable<Event> {
 		_timeEventCreated = timeEventCreated;
 	}
 
-	@Override
 	/**
 	 * Compares two Events based on their event times. Since you are implementing a maximum heap,
 	 * this method assumes that the event with the smaller event time should receive higher priority.
 	 */
+	@Override
 	public int compareTo (Event e) {
 		if (_timeOfEvent < e._timeOfEvent) {
 			return +1;

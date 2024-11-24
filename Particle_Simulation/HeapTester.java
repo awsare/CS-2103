@@ -13,8 +13,16 @@ public class HeapTester {
 		}
 	}
 
+	private void printHeap(HeapImpl<Integer> heap) {
+		for (int j = 0; j < heap.size(); j++) {
+			System.out.print(heap.getElem(j) + " ");
+		}
+
+		System.out.println();
+	}
+
 	@Test
-	public void testShuffled () {
+	public void testShuffled (){
 		final int N = 1000;
 		final int[] numbers = new int[N];
 		for (int i = 0; i < N; i++) {
@@ -22,14 +30,25 @@ public class HeapTester {
 		}
 		permute(numbers);
 
-		final HeapImpl<Integer> heap = new HeapImpl<Integer>();
+		final HeapImpl<Integer> heap = new HeapImpl<>();
 		for (int i = 0; i < N; i++) {
 			heap.add(numbers[i]);
+
+			//printHeap(heap);
 		}
 		assertEquals(N, heap.size());
+
 		for (int i = N-1; i >= 0; i--) {
-			assertEquals((Integer) i, heap.removeFirst());
+			try {
+				assertEquals((Integer) i, heap.removeFirst());
+			} catch (RuntimeException e) {
+				System.out.println(e.getMessage());
+				fail();
+			}
+
+			//printHeap(heap);
 		}
+
 		assertEquals(0, heap.size());
 	}
 }

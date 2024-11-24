@@ -71,6 +71,7 @@ public class ParticleSimulator extends JPanel {
 		// and all the particles and the walls.
 		for (Particle p : _particles) {
 			// Add new events.
+
 		}
 		
 		_events.add(new TerminationEvent(_duration));
@@ -125,7 +126,7 @@ public class ParticleSimulator extends JPanel {
 
 	public static void main (String[] args) throws IOException {
 		if (args.length < 1) {
-			System.out.println("Usage: java ParticalSimulator <filename>");
+			System.out.println("Usage: java ParticleSimulator <filename>");
 			System.exit(1);
 		}
 
