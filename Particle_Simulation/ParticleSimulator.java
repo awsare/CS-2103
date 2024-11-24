@@ -69,9 +69,16 @@ public class ParticleSimulator extends JPanel {
 		// Create initial events, i.e., all the possible
 		// collisions between all the particles and each other,
 		// and all the particles and the walls.
-		for (Particle p : _particles) {
+		for (Particle particle : _particles) {
 			// Add new events.
-
+			for (Particle other : _particles) {
+				if (!particle.equals(other)) {
+					double collisionTime = particle.getCollisionTime(other);
+					if (collisionTime != Double.POSITIVE_INFINITY) {
+						_events.add(new Event(collisionTime, lastTime));
+					}
+				}
+			}
 		}
 		
 		_events.add(new TerminationEvent(_duration));
@@ -88,6 +95,9 @@ public class ParticleSimulator extends JPanel {
 			// if (event not valid) {
 			//   continue;
 			// }
+			if (event._timeOfEvent > lastTime) {
+				continue;
+			}
 
 
 			// Since the event is valid, then pause the simulation for the right
