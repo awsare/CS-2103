@@ -75,7 +75,7 @@ public class ParticleSimulator extends JPanel {
 				if (!particle.equals(other)) {
 					double collisionTime = particle.getCollisionTime(other);
 					if (collisionTime != Double.POSITIVE_INFINITY) {
-						_events.add(new Event(collisionTime, lastTime));
+						_events.add(new Event(collisionTime, lastTime)); // still needs to add wall collisions
 					}
 				}
 			}
