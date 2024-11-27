@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.*;
 
-public class Particle {
+public class Particle implements Collidable {
 	private String _name;
 	private double _x, _y;
 	private double _vx, _vy;
@@ -40,6 +40,41 @@ public class Particle {
 	}
 
 	/**
+	 * @return _vx
+	 */
+	public double getVx() {
+		return _vx;
+	}
+
+	/**
+	 * @return _vy
+	 */
+	public double getVy() {
+		return _vy;
+	}
+
+	/**
+	 * @return radius
+	 */
+	public double getRadius() {
+		return _radius;
+	}
+
+	/**
+	 * @return x
+	 */
+	public double getX() {
+		return _x;
+	}
+
+	/**
+	 * @return y
+	 */
+	public double getY() {
+		return _y;
+	}
+
+	/**
 	 * Draws the particle as a filled circle.
 	 * DO NOT MODIFY THIS METHOD
 	 */
@@ -72,7 +107,7 @@ public class Particle {
 	 * @param now the current time in the simulation
 	 * @param other the particle that this one collided with
 	 */
-	public void updateAfterCollision (double now, Particle other) {
+	public void updateAfterParticleCollision(double now, Particle other) {
 		double vxPrime, vyPrime;
 		double otherVxPrime, otherVyPrime;
 		double common = ((_vx - other._vx) * (_x - other._x) + 
@@ -90,6 +125,22 @@ public class Particle {
 
 		_lastUpdateTime = now;
 		other._lastUpdateTime = now;
+	}
+
+	/**
+	 * Updates particle's velocities after a collision on a wall.
+	 * DO NOT CHANGE THE MATH IN THIS METHOD
+	 * @param now the current time in the simulation
+	 * @param other the wall that this particle collided with
+	 */
+	public void updateAfterWallCollision(double now, Wall other) {
+		if (other._side == Wall.WallSide.LEFT || other._side == Wall.WallSide.RIGHT) {
+			_vx *= -1;
+		} else if (other._side == Wall.WallSide.TOP || other._side == Wall.WallSide.BOTTOM) {
+			_vy *= -1;
+		}
+
+		_lastUpdateTime = now;
 	}
 
 	/**
