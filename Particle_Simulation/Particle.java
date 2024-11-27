@@ -75,6 +75,13 @@ public class Particle implements Collidable {
 	}
 
 	/**
+	 * @return lastUpdateTime
+	 */
+	public double getLastUpdateTime() {
+		return _lastUpdateTime;
+	}
+
+	/**
 	 * Draws the particle as a filled circle.
 	 * DO NOT MODIFY THIS METHOD
 	 */

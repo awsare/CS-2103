@@ -119,6 +119,16 @@ public class ParticleSimulator extends JPanel {
 				continue;
 			}
 
+			if (event._eventType == Event.EventType.PARTICLE) {
+				if (event._particleA.getLastUpdateTime() > event._timeOfEvent || event._particleB.getLastUpdateTime() > lastTime) {
+					continue;
+				}
+			} else {
+				if (event._particleA.getLastUpdateTime() > lastTime) {
+					continue;
+				}
+			}
+
 			double checkColTime;
 			if (event._eventType == Event.EventType.PARTICLE) {
 				checkColTime = event._particleA.getCollisionTime(event._particleB);
@@ -204,7 +214,7 @@ public class ParticleSimulator extends JPanel {
 			if (show) {
 				repaint();
 			}
-		}
+        }
 
 		// Print out the final state of the simulation
 		System.out.println(_width);
