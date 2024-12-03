@@ -81,6 +81,10 @@ public class Particle implements Collidable {
 		return _lastUpdateTime;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
 	/**
 	 * Draws the particle as a filled circle.
 	 * DO NOT MODIFY THIS METHOD
