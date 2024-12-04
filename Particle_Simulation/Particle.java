@@ -140,7 +140,6 @@ public class Particle implements Collidable {
 
 	/**
 	 * Updates particle's velocities after a collision on a wall.
-	 * DO NOT CHANGE THE MATH IN THIS METHOD
 	 * @param now the current time in the simulation
 	 * @param other the wall that this particle collided with
 	 */
@@ -169,6 +168,12 @@ public class Particle implements Collidable {
 		double d = _y - other._y;
 		double r = _radius;
 
+//		System.out.print("A: " + a + " ");
+//		System.out.print(" B: " + b + " ");
+//		System.out.print(" C: " + c + " ");
+//		System.out.print(" D: " + d + " ");
+//		System.out.print(" R: " + r + " ");
+
 		double A = a*a + c*c;
 		double B = 2 * (a*b + c*d);
 		double C = b*b + d*d - 4*r*r;
@@ -184,6 +189,9 @@ public class Particle implements Collidable {
 			t2 = (-B + Math.sqrt(B*B - 4*A*C)) / (2*A);
 		}
 
+//		System.out.print("T1: " + t1 + " ");
+//		System.out.println("T2: " + t2);
+
 		// Require that the collision time be slightly larger than 0 to avoid
 		// numerical issues.
 		double SMALL = 1e-6;
@@ -198,6 +206,8 @@ public class Particle implements Collidable {
 			// no collision
 			t = Double.POSITIVE_INFINITY;
 		}
+
+
 
 		return t;
 	}

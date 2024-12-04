@@ -18,43 +18,53 @@ public class Wall implements Collidable {
             case TOP -> {
                 if (other.getVy() >= 0) {
                     collisionTime =  Double.POSITIVE_INFINITY;
+                    break;
                 }
-                System.out.println("Top Wall Collision Time: " + (_position - (other.getY() - other.getRadius())) / other.getVy());
-                collisionTime =  (_position - (other.getY() - other.getRadius())) / other.getVy();
+//                System.out.println("Particle Y: " + other.getY());
+//                System.out.println("Particle Radius: " + other.getRadius());
+//                System.out.println("Particle VY: " + other.getVy());
+                collisionTime = (_position - (other.getY() - other.getRadius())) / other.getVy();
+                //System.out.println("Top: " + collisionTime);
                 break;
             }
             case BOTTOM -> {
                 if (other.getVy() <= 0) {
                     collisionTime =  Double.POSITIVE_INFINITY;
+                    break;
                 }
-                System.out.println("Bottom Wall Collision Time: " + (_position - (other.getY() + other.getRadius())) / other.getVy());
                 collisionTime =  (_position - (other.getY() + other.getRadius())) / other.getVy();
+                //System.out.println("Bottom: " + collisionTime);
+
                 break;
             }
             case LEFT -> {
                 if (other.getVx() >= 0) {
                     collisionTime = Double.POSITIVE_INFINITY;
+                    break;
                 }
-                System.out.println("Left Wall Collision Time: " + (_position - (other.getX() - other.getRadius())) / other.getVx());
                 collisionTime = (_position - (other.getX() - other.getRadius())) / other.getVx();
+                //System.out.println("Left: " + collisionTime);
+
                 break;
             }
             case RIGHT -> {
                 if (other.getVx() <= 0) {
                     collisionTime = Double.POSITIVE_INFINITY;
+                    break;
                 }
 //                System.out.println("Wall Position: " + _position);
 //                System.out.println("Particle X: " + other.getX());
-//                System.out.println("VX: " + other.getVx());
+//                System.out.println("Particle Radius: " + other.getRadius());
+//                System.out.println("Particle VX: " + other.getVx());
 
-                System.out.println((other.getX() + other.getRadius()));
-                System.out.println((_position - (other.getX() + other.getRadius())));
-                System.out.println("Right Wall Collision Time: " + (_position - (other.getX() + other.getRadius())) / other.getVx());
+//                System.out.println((other.getX() + other.getRadius()));
+//                System.out.println((_position - (other.getX() + other.getRadius())));
                 collisionTime = (_position - (other.getX() + other.getRadius())) / other.getVx();
+                //System.out.println("Right: " + collisionTime);
+
                 break;
             }
         };
-        double SMALL = 1e-6;
 
 //        return Math.max(SMALL, collisionTime);
         return collisionTime;

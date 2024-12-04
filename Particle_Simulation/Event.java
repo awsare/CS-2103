@@ -60,4 +60,8 @@ public class Event implements Comparable<Event> {
 			return -1;
 		}
 	}
+
+	public String toString() {
+		return "Event Type: " + _eventType + " Time Of Event: " + _timeOfEvent + " Time Event Created: " + _timeEventCreated;
+	}
 }
