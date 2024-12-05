@@ -144,13 +144,23 @@ public class Particle implements Collidable {
 	/**
 	 * Updates particle's velocities after a collision on a wall.
 	 * @param now the current time in the simulation
-	 * @param other the wall that this particle collided with
+	 * @param wall the wall that this particle collided with
 	 */
-	public void updateAfterWallCollision(double now, Wall other) {
-		if (other._side == Wall.WallSide.LEFT || other._side == Wall.WallSide.RIGHT) {
+	public void updateAfterWallCollision(double now, Wall wall, double width) {
+		if (wall._side == Wall.WallSide.LEFT || wall._side == Wall.WallSide.RIGHT) {
 			_vx *= -1;
-		} else if (other._side == Wall.WallSide.TOP || other._side == Wall.WallSide.BOTTOM) {
+
+			// check for corner collision with top or bottom wall too
+			if (_y - _radius == 0 || _y + _radius == width) {
+				_vy *= -1;
+			}
+		} else if (wall._side == Wall.WallSide.TOP || wall._side == Wall.WallSide.BOTTOM) {
 			_vy *= -1;
+
+			// check for corner collision with left or right wall too
+			if (_x - _radius == 0 || _x + _radius == width) {
+				_vx *= -1;
+			}
 		}
 
 		_lastUpdateTime = now;

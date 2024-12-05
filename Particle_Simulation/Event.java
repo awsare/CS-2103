@@ -3,8 +3,8 @@
  */
 abstract class Event implements Comparable<Event> {
 
-	double _timeOfEvent;
-	double _timeEventCreated;
+	private double _timeOfEvent;
+	private double _timeEventCreated;
 
 	public Event (double timeOfEvent, double timeEventCreated) {
 		_timeOfEvent = timeOfEvent;
@@ -18,21 +18,31 @@ abstract class Event implements Comparable<Event> {
 	@Override
 	public int compareTo (Event e) {
 		if (_timeOfEvent < e._timeOfEvent) {
-			return -1;
+			return +1;
 		} else if (_timeOfEvent == e._timeOfEvent) {
 			return 0;
 		} else {
-			return +1;
+			return -1;
 		}
+	}
+
+	/**
+	 * @return time of event
+	 */
+	public double getTimeOfEvent() {
+		return _timeOfEvent;
+	}
+
+	/**
+	 * @return time event created
+	 */
+	public double getTimeEventCreated() {
+		return _timeEventCreated;
 	}
 
 	public boolean isValid() {
 		return false;
 	}
 
-	public void updateAfterCollision(double now) {}
-
-//	public String toString() {
-//		return /*"Event Type: " + _eventType + */" Time Of Event: " + _timeOfEvent + " Time Event Created: " + _timeEventCreated;
-//	}
+	public void updateAfterCollision(double now, double width) {}
 }

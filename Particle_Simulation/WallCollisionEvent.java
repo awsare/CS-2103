@@ -1,6 +1,6 @@
 public class WallCollisionEvent extends Event {
-    Particle particle;
-    Wall wall;
+    private Particle particle;
+    private Wall wall;
 
     public WallCollisionEvent(double timeOfEvent, double timeEventCreated, Particle particle, Wall wall) {
         super(timeOfEvent, timeEventCreated);
@@ -12,7 +12,21 @@ public class WallCollisionEvent extends Event {
      * @return if the particle has been updated after the event was created, the event is invalid
      */
     public boolean isValid() {
-        return particle.getLastUpdateTime() <= super._timeEventCreated;
+        return particle.getLastUpdateTime() <= super.getTimeEventCreated();
+    }
+
+    /**
+     * @return particle in collision
+     */
+    public Particle getParticle() {
+        return particle;
+    }
+
+    /**
+     * @return wall in collision
+     */
+    public Wall getWall() {
+        return wall;
     }
 
     /**
@@ -20,12 +34,16 @@ public class WallCollisionEvent extends Event {
      * @param now current time
      */
     @Override
-    public void updateAfterCollision(double now) {
-        particle.updateAfterWallCollision(now, wall);
+    public void updateAfterCollision(double now, double width) {
+//        System.out.println("Colliding with wall " + wall._side);
+//        System.out.println("VX is " + particle.getVx() + " and VY is " + particle.getVy());
+        particle.updateAfterWallCollision(now, wall, width);
+//        System.out.println("Updated after wall collision.");
+//        System.out.println("VX is " + particle.getVx() + " and VY is " + particle.getVy());
     }
 
     @Override
     public String toString() {
-        return "WallCollisionEvent [particle=" + particle + ", wall=" + wall + ", timeCreated: " + super._timeEventCreated + ", timeOfEvent: " + super._timeOfEvent + "]";
+        return "WallCollisionEvent [particle=" + particle + ", wall=" + wall + ", timeCreated: " + super.getTimeEventCreated() + ", timeOfEvent: " + super.getTimeOfEvent() + "]";
     }
 }

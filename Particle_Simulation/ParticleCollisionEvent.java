@@ -1,5 +1,5 @@
 public class ParticleCollisionEvent extends Event {
-    Particle particleA, particleB;
+    private Particle particleA, particleB;
 
     public ParticleCollisionEvent(double timeOfEvent, double timeEventCreated, Particle particleA, Particle particleB) {
         super(timeOfEvent, timeEventCreated);
@@ -11,7 +11,21 @@ public class ParticleCollisionEvent extends Event {
      * @return if the particles have been updated after the event was created, the event is invalid
      */
     public boolean isValid() {
-        return particleA.getLastUpdateTime() <= super._timeEventCreated && particleB.getLastUpdateTime() <= super._timeEventCreated;
+        return particleA.getLastUpdateTime() <= super.getTimeEventCreated() && particleB.getLastUpdateTime() <= super.getTimeEventCreated();
+    }
+
+    /**
+     * @return particleA in collision
+     */
+    public Particle getParticleA() {
+        return particleA;
+    }
+
+    /**
+     * @return particleB
+     */
+    public Particle getParticleB() {
+        return particleB;
     }
 
     /**
@@ -19,7 +33,8 @@ public class ParticleCollisionEvent extends Event {
      * @param now current time
      */
     @Override
-    public void updateAfterCollision(double now) {
+    public void updateAfterCollision(double now, double width) {
         particleA.updateAfterParticleCollision(now, particleB);
+        //System.out.println("Updated after particle collision.");
     }
 }
