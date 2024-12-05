@@ -12,6 +12,11 @@ public class Wall implements Collidable {
     }
 
     @Override
+    public String toString() {
+        return "" + _side;
+    }
+
+    @Override
     public double getCollisionTime(Particle other) {
         double collisionTime = 0;
         switch (_side) {

@@ -97,7 +97,7 @@ public class Particle implements Collidable {
 	 * Useful for debugging.
 	 */
 	public String toString () {
-		return (_name.equals("") ? "" : _name + " ") + _x + "  " + _y + " " + _vx + " " + _vy + " " + _radius;
+		return "Name: " + (_name.equals("") ? "" : _name + " ") + "X: " + _x + "  Y: " + _y + " VX: " + _vx + " YY: " + _vy + " Radius: " + _radius;
 	}
 
 	/**
