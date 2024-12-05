@@ -81,6 +81,9 @@ public class Particle implements Collidable {
 		return _lastUpdateTime;
 	}
 
+	/**
+	 * @return name
+	 */
 	public String getName() {
 		return _name;
 	}
@@ -97,7 +100,7 @@ public class Particle implements Collidable {
 	 * Useful for debugging.
 	 */
 	public String toString () {
-		return "Name: " + (_name.equals("") ? "" : _name + " ") + "X: " + _x + "  Y: " + _y + " VX: " + _vx + " YY: " + _vy + " Radius: " + _radius;
+		return "Name " + (_name.equals("") ? "" : _name + ", ") + "X " + _x + ", Y " + _y + ", VX " + _vx + ", YY " + _vy + ", Radius " + _radius;
 	}
 
 	/**

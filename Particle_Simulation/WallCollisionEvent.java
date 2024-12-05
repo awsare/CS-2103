@@ -8,10 +8,17 @@ public class WallCollisionEvent extends Event {
         this.wall = wall;
     }
 
+    /**
+     * @return if the particle has been updated after the event was created, the event is invalid
+     */
     public boolean isValid() {
         return particle.getLastUpdateTime() <= super._timeEventCreated;
     }
 
+    /**
+     * updates particle values in wall collision
+     * @param now current time
+     */
     @Override
     public void updateAfterCollision(double now) {
         particle.updateAfterWallCollision(now, wall);

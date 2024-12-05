@@ -30,9 +30,7 @@ abstract class Event implements Comparable<Event> {
 		return false;
 	}
 
-	public void updateAfterCollision(double now) {
-
-	}
+	public void updateAfterCollision(double now) {}
 
 //	public String toString() {
 //		return /*"Event Type: " + _eventType + */" Time Of Event: " + _timeOfEvent + " Time Event Created: " + _timeEventCreated;

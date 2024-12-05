@@ -150,7 +150,7 @@ public class ParticleSimulator extends JPanel {
 			// amount of time, and then update the screen.
 			if (show) {
 				try {
-					Thread.sleep((long) (1000 * delta));
+					Thread.sleep((long) (delta));
 				} catch (InterruptedException ie) {}
 			}
 

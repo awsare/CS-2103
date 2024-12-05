@@ -16,6 +16,10 @@ public class Wall implements Collidable {
         return "" + _side;
     }
 
+    /**
+     * @param other the other particle to consider
+     * @return collision time
+     */
     @Override
     public double getCollisionTime(Particle other) {
         double collisionTime = 0;
