@@ -66,35 +66,33 @@ public class ParticleSimulator extends JPanel {
 		}
 	}
 
+
+	/**
+	 * @param toCheck list of particle to queue events for
+	 * @param lastTime last time in simulation
+	 */
 	public void queueEvents(List<Particle> toCheck, double lastTime) {
-		System.out.println("Adding new events: ");
+		//System.out.println("Adding new events: ");
 		for (Particle particleA : toCheck) {
 			// Add new events.
 			for (Particle particleB : _particles) {
 				if (particleA != particleB) {
 					//System.out.println("Found a potential particle collision");
 					double collisionTime = particleA.getCollisionTime(particleB);
-					System.out.println("Found a potential particle collision, time is " + collisionTime);
+					//System.out.println("Found a potential particle collision, time is " + collisionTime);
 					if (collisionTime != Double.POSITIVE_INFINITY) {
-						//System.out.println("Added particle collision");
-//						Event e = new Event(Event.EventType.PARTICLE, lastTime + collisionTime, lastTime);
-//						e.setParticleA(particle);
-//						e.setParticleB(other);
 						_events.add(new ParticleCollisionEvent(lastTime + collisionTime, lastTime, particleA, particleB));
-						System.out.println("Added the particle collision.");
+						//System.out.println("Added the particle collision.");
 					}
 				}
 			}
 
 			for (Wall wall : _walls) {
 				double collisionTime = wall.getCollisionTime(particleA);
-				System.out.println("Found a potential wall collision, time is " + collisionTime);
+				//System.out.println("Found a potential wall collision, time is " + collisionTime);
 				if (collisionTime != Double.POSITIVE_INFINITY) {
-//					Event e = new Event(Event.EventType.WALL, lastTime + collisionTime, lastTime);
-//					e.setWall(wall);
-//					e.setParticleA(particle);
 					_events.add(new WallCollisionEvent(lastTime + collisionTime, lastTime, particleA, wall));
-					System.out.println("Added the wall collision.");
+					//System.out.println("Added the wall collision.");
 				}
 			}
 		}
@@ -111,16 +109,16 @@ public class ParticleSimulator extends JPanel {
 		// and all the particles and the walls.
 		queueEvents(_particles, lastTime);
 
-		System.out.println(_duration);
+		//System.out.println(_duration);
 		
 		_events.add(new TerminationEvent(_duration));
 
 		while (_events.size() > 0) {
-			System.out.println("\nNew loop in while loop:");
-			//System.out.println(_events.size());
+			//System.out.println("\nNew loop in while loop:");
+			//System.out.println("Heap Size: " + _events.size());
 			Event event = _events.removeFirst();
-			System.out.println(event);
-			System.out.println("Last time is " + lastTime);
+			//System.out.println(event);
+			//System.out.println("Last time is " + lastTime);
 			//System.out.println(event._eventType);
 //			for (int j = 0; j < _events.size(); j++) {
 //				System.out.print(_events.getElem(j)._eventType + " ");
@@ -137,9 +135,6 @@ public class ParticleSimulator extends JPanel {
 			}
 
 			// Check if event still valid; if not, then skip this event
-			// if (event not valid) {
-			//   continue;
-			// }
 			if (event._timeOfEvent < lastTime) {
 				System.out.println("Not valid, already happened.");
 				continue;
@@ -149,25 +144,6 @@ public class ParticleSimulator extends JPanel {
 				System.out.println("Not valid, particle updated after particle collision event created.");
 				continue;
 			}
-
-//			if (event instanceof ParticleCollisionEvent) {
-//				if (((ParticleCollisionEvent) event).particleA.getLastUpdateTime() > event._timeEventCreated || ((ParticleCollisionEvent) event).particleB.getLastUpdateTime() > event._timeEventCreated) {
-//					System.out.println("Not valid, particle updated after particle collision event created.");
-//					continue;
-//				}
-//			} else if (event instanceof WallCollisionEvent) {
-//				if (((WallCollisionEvent) event).particle.getLastUpdateTime() > event._timeEventCreated) {
-//					System.out.println("Not valid, particle updated after wall collision event created.");
-//					continue;
-//				}
-//			}
-
-//			if (event._eventType == Event.EventType.PARTICLE) {
-//				System.out.println("Particle A: " + event._particleA.getName() + ", Particle B: " + event._particleB.getName());
-//				System.out.println("Particle Collision Time: " + event._particleA.getCollisionTime(event._particleB));
-//			} else if (event._eventType == Event.EventType.WALL) {
-//				System.out.println("Particle A: " + event._particleA.getName() + ", Wall: " + event._wall._side);
-//			}
 
 
 			// Since the event is valid, then pause the simulation for the right
@@ -189,20 +165,10 @@ public class ParticleSimulator extends JPanel {
 
 			event.updateAfterCollision(event._timeOfEvent);
 
-//			if (event instanceof ParticleCollisionEvent) {
-//				((ParticleCollisionEvent) event.particleA.updateAfterParticleCollision(event._timeOfEvent, ((ParticleCollisionEvent) event).particleB);
-//			} else if (event instanceof WallCollisionEvent) {
-//				((WallCollisionEvent) event).particle.updateAfterWallCollision(event._timeOfEvent, ((WallCollisionEvent) event).wall);
-//			}
-
 			// Enqueue new events for the particle(s) that were involved in this event.
 
+			// queue method takes in a list of particles to queue events for, this adds relevant particles to a list
 			ArrayList<Particle> toCheck = new ArrayList<>();
-
-//			toCheck.add(event.particleA);
-//			if (event._eventType == Event.EventType.PARTICLE) {
-//				toCheck.add(event._particleB);
-//			}
 
 			if (event instanceof ParticleCollisionEvent) {
 				toCheck.add(((ParticleCollisionEvent) event).particleA);
